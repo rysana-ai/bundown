@@ -108,16 +108,16 @@ try {
         console.warn(`Unknown language "${block.language}"`);
     }
   }
-  const filename = `${process.env.HOME}/.bundown/tmp/${crypto.randomUUID()}.ts`;
-  write(filename, script);
-  let process_ret: ShellOutput;
+  const fileName = `${process.env.HOME}/.bundown/tmp/${crypto.randomUUID()}.ts`;
+  write(fileName, script);
+  let processRet: ShellOutput | undefined = undefined;
   try {
-    process_ret = await $`bun ${filename}`;
-  } catch (process_exception) {
-    console.error(process_exception);
+    processRet = await $`bun ${fileName}`;
+  } catch (processException) {
+    console.error(processException);
   } finally {
-    await unlink(filename);
-    process.exit(process_ret.exitCode);
+    await unlink(fileName);
+    process.exit(processRet?.exitCode ?? 0);
   }
 } catch (error) {
   console.log(usage);
