@@ -1,5 +1,7 @@
 #!/usr/bin/env bun
-import { $, file, write } from 'bun'
+import { $, file, write, type ShellOutput } from 'bun'
+import { unlink } from 'node:fs/promises'
+
 const usage = '\nbundown <file.md>\n'
 function parse(markdown: string) {
   const blocks: { language: string; content: string }[] = []
@@ -44,6 +46,8 @@ function parse(markdown: string) {
             case 'zsh':
               language = 'shell'
               break
+            default:
+              language = ''
           }
           block.language = language || '?'
           state = 'code-text'
@@ -99,13 +103,20 @@ try {
         if (process.env.BD_VERBOSE) console.log(block.content)
         break
       default:
-        console.log(`Unknown language "${block.language}"`)
+        console.warn(`Unknown language "${block.language}"`)
     }
   }
-  const tmp = `${process.env.HOME}/.bundown/tmp/script.ts`
-  write(tmp, script)
-  await $`bun ${tmp}`
-  process.exit(0)
+  const fileName = `${process.env.HOME}/.bundown/tmp/${crypto.randomUUID()}.ts`
+  write(fileName, script)
+  let processRet: ShellOutput | undefined = undefined
+  try {
+    processRet = await $`bun ${fileName}`
+  } catch (processException) {
+    console.error(processException)
+  } finally {
+    await unlink(fileName)
+    process.exit(processRet?.exitCode ?? 0)
+  }
 } catch (error) {
   console.log(usage)
   console.error(error)
