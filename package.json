@@ -1,10 +1,16 @@
 {
   "name": "bundown",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Bundown is a fast all-in-one Markdown runtime.",
-  "keywords": ["bundown", "markdown", "runtime"],
+  "keywords": ["bundown", "bun", "markdown", "runtime", "typescript", "javascript", "shell"],
   "license": "MIT",
   "bin": { "bundown": "./bin/bundown.ts" },
+  "devDependencies": {
+    "@biomejs/biome": "^1.5.2",
+    "@types/bun": "^1.0.2",
+    "@types/node": "^20.11.4",
+    "typescript": "^5.3.3"
+  },
   "os": ["darwin", "linux"],
   "cpu": ["arm64", "x64"]
 }

@@ -31,14 +31,19 @@ function parse(markdown: string) {
           switch (language) {
             case 'ts':
               language = 'typescript'
+              break
             case 'js':
               language = 'javascript'
+              break
             case 'sh':
               language = 'shell'
+              break
             case 'bash':
               language = 'shell'
+              break
             case 'zsh':
               language = 'shell'
+              break
           }
           block.language = language || '?'
           state = 'code-text'
