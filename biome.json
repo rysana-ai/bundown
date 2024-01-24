@@ -1,0 +1,61 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.5.2/schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "formatter": {
+    "enabled": true,
+    "indentWidth": 2,
+    "indentStyle": "space",
+    "lineWidth": 99,
+    "formatWithErrors": true
+  },
+  "javascript": {
+    "formatter": {
+      "trailingComma": "all",
+      "bracketSameLine": true,
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "single",
+      "quoteProperties": "asNeeded",
+      "semicolons": "asNeeded",
+      "arrowParentheses": "asNeeded"
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "all": true,
+      "complexity": { "useSimplifiedLogicExpression": "off" },
+      "correctness": { "noUndeclaredVariables": "off" },
+      "style": {
+        "noParameterAssign": "off",
+        "useTemplate": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "off",
+        "noConsoleLog": "off",
+        "noAssignInExpressions": "off"
+      },
+      "nursery": {
+        "noDuplicateJsonKeys": "error",
+        "noEmptyBlockStatements": "error",
+        "noEmptyTypeParameters": "error",
+        "noGlobalAssign": "error",
+        "noInvalidUseBeforeDeclaration": "error",
+        "noThenProperty": "error",
+        "noUnusedImports": "error",
+        "noUnusedPrivateClassMembers": "error",
+        "noUselessLoneBlockStatements": "error",
+        "noUselessTernary": "error",
+        "useAwait": "error",
+        "useConsistentArrayType": "error",
+        "useFilenamingConvention": "off",
+        "useForOf": "error",
+        "useExportType": "error",
+        "useImportType": "error",
+        "useGroupedTypeImport": "error",
+        "useNodejsImportProtocol": "off",
+        "useNumberNamespace": "error",
+        "useShorthandFunctionType": "error"
+      }
+    }
+  }
+}
