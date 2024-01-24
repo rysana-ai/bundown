@@ -1,6 +1,6 @@
 {
   "name": "bundown",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Bundown is a fast all-in-one Markdown runtime.",
   "keywords": ["bundown", "markdown", "runtime"],
   "license": "MIT",

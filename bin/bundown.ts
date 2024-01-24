@@ -27,32 +27,20 @@ function parse(markdown: string) {
         break
       case 'code-lang':
         if (markdown[j] === '\n') {
-          const language = block.language.split(/\s+/)[0]
+          let language = block.language.split(/\s+/)[0]
           switch (language) {
-            case 'typescript':
-              break
-            case 'javascript':
-              break
-            case 'shell':
-              break
             case 'ts':
-              block.language = 'typescript'
-              break
+              language = 'typescript'
             case 'js':
-              block.language = 'javascript'
-              break
+              language = 'javascript'
             case 'sh':
-              block.language = 'shell'
-              break
+              language = 'shell'
             case 'bash':
-              block.language = 'shell'
-              break
+              language = 'shell'
             case 'zsh':
-              block.language = 'shell'
-              break
-            default:
-              block.language = language || '?'
+              language = 'shell'
           }
+          block.language = language || '?'
           state = 'code-text'
           break
         }
