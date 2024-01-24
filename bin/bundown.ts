@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
-import { $, file, write, type ShellOutput } from 'bun'
 import { unlink } from 'node:fs/promises'
+import { $, type ShellOutput, file, write } from 'bun'
 
 const usage = '\nbundown <file.md>\n'
 function parse(markdown: string) {
@@ -106,16 +106,16 @@ try {
         console.warn(`Unknown language "${block.language}"`)
     }
   }
-  const fileName = `${process.env.HOME}/.bundown/tmp/${crypto.randomUUID()}.ts`
-  write(fileName, script)
-  let processRet: ShellOutput | undefined = undefined
+  const filename = `${process.env.HOME}/.bundown/tmp/${crypto.randomUUID()}.ts`
+  write(filename, script)
+  let processShellOutput: ShellOutput | undefined = undefined
   try {
-    processRet = await $`bun ${fileName}`
+    processShellOutput = await $`bun ${filename}`
   } catch (processException) {
     console.error(processException)
   } finally {
-    await unlink(fileName)
-    process.exit(processRet?.exitCode ?? 0)
+    await unlink(filename)
+    process.exit(processShellOutput?.exitCode ?? 0)
   }
 } catch (error) {
   console.log(usage)
