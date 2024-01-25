@@ -19,6 +19,14 @@
 - [ ] `bundown` should properly escape the content of Shell code blocks when compiling the executed TypeScript file.
 - [ ] `bundown` should check that the user has `bun@^1.0.24` installed and in their `$PATH` and report a helpful error message if not.
 
+## `bundown@^0.0.5`
+
+### Improvements
+
+- [x] `bundown.ts` now uses a single parser loop to run faster in less lines of code.
+
+Thank you to everybody who contributed to this release: @arrysana @jrysana
+
 ## `bundown@^0.0.4`
 
 ### Features
