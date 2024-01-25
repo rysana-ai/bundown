@@ -4,11 +4,14 @@
   "description": "Bundown is a fast all-in-one Markdown runtime.",
   "keywords": ["bundown", "bun", "markdown", "runtime", "typescript", "javascript", "shell"],
   "license": "MIT",
+  "homepage": "https://github.com/rysana-ai/bundown",
+  "bugs": "https://github.com/rysana-ai/bundown/issues",
+  "repository": { "type": "git", "url": "https://github.com/rysana-ai/bundown.git" },
   "bin": { "bundown": "./bin/bundown.ts" },
   "devDependencies": {
     "@biomejs/biome": "^1.5.2",
-    "@types/bun": "^1.0.2",
-    "@types/node": "^20.11.4",
+    "@types/bun": "^1.0.3",
+    "@types/node": "^20.11.5",
     "typescript": "^5.3.3"
   },
   "os": ["darwin", "linux"],
