@@ -25,6 +25,14 @@
 
 ## Changelog
 
+### `bundown@^0.0.7`
+
+#### Improvements
+
+- [x] `package.json` now lists runtime dependencies.
+
+---
+
 ### `bundown@^0.0.6`
 
 #### Features

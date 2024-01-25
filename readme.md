@@ -1,10 +1,10 @@
-# **Bundown** [![bundown minzip package size](https://img.shields.io/bundlephobia/minzip/bundown?label=zipped)](https://www.npmjs.com/package/bundown) [![bundown package version](https://img.shields.io/npm/v/bundown.svg?colorB=green)](https://www.npmjs.com/package/bundown) [![bundown license](https://img.shields.io/npm/l/bundown.svg?colorB=lightgrey)](https://github.com/rysana-ai/bundown/blob/main/license)
+# **Bundown** [![bundown package version](https://img.shields.io/npm/v/bundown.svg?colorB=green)](https://www.npmjs.com/package/bundown) [![bundown license](https://img.shields.io/npm/l/bundown.svg?colorB=lightgrey)](https://github.com/rysana-ai/bundown/blob/main/license)
 
-Bundown is a fast all-in-one Markdown runtime. It is built on top of [`bun ^1.0.24`](https://bun.sh) and can run Markdown files, combining and executing their Shell, JavaScript, and TypeScript code blocks.
+Bundown is a fast all-in-one Markdown runtime. It is built on top of [Bun](https://bun.sh) and can run Markdown files, combining and executing their Shell, JavaScript, and TypeScript code blocks.
 
 ## Installation
 
-If you haven't already, start by installing Bun:
+If you haven't already, start by installing `bun@^1.0.25`:
 
 ```sh
 curl -fsSL https://bun.sh/install | bash
