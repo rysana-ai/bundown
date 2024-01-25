@@ -24,7 +24,7 @@ function parse(markdown: string) {
         break
       case 'code-lang':
         if (markdown[j] === '\n') {
-          let language = block.language.split(/\s+/)[0]
+          let language = block.language.split(/\s+/)[0].toLowerCase()
           switch (language) {
             case 'ts':
               language = 'typescript'
