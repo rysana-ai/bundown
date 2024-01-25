@@ -20,7 +20,7 @@ Now you should be able to run any Markdown file with `bundown <file.md>`.
 
 ## Contributing
 
-If you have any bugs/issues, feature requests, etc. please open an issue or pull request on [GitHub](https://github.com/rysana-ai/bundown).
+If you have any bugs, feature requests, etc. please open a [discussion](https://github.com/rysana-ai/bundown/discussions), [issue](https://github.com/rysana-ai/bundown/issues) or [pull request](https://github.com/rysana-ai/bundown/pulls) as appropriate.
 
 Before you open a PR, please use [`bundown format.md`](format.md) to format the code with `biome`.
 
