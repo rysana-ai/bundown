@@ -10,3 +10,4 @@ yarn-error.log*
 .pnpm-debug.log*
 .env
 .env*.local
+*.local*
