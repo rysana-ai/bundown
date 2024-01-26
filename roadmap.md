@@ -9,7 +9,6 @@
 - [ ] `bundown https://example.com/file.md` runs a Markdown file from a URL.
 - [ ] `bundown --safe <file.md>` pretty-prints each code block before running with a Y/N prompt to run it.
 - [ ] `bundown` uses source mapping to deliver helpful and traceable error messages when code blocks or individual lines of code fail.
-- [ ] `bundown upgrade` upgrades `bundown` to the latest version.
 - [ ] `bundown` can run Python code blocks.
 - [ ] `bundown` can run C/C++ code blocks.
 - [ ] `bundown` can run Rust code blocks.
@@ -25,11 +24,19 @@
 
 ## Changelog
 
+### `bundown@^0.0.8`
+
+#### Improvements
+
+- [x] `bundown upgrade` upgrades `bundown` to the latest version. @arrysana
+
+---
+
 ### `bundown@^0.0.7`
 
 #### Improvements
 
-- [x] `package.json` now lists runtime dependencies.
+- [x] `package.json` now lists runtime dependencies. @jrysana
 
 ---
 
@@ -37,13 +44,13 @@
 
 #### Features
 
-- [x] `bundown --version` (`-v`) prints the version of `bundown` installed.
-- [x] `bundown --print <file.md>` (`-p`) pretty-prints the Markdown and syntax highlighted code blocks.
-- [x] `bundown --help` (`-h`) prints a help message.
+- [x] `bundown --version` (`-v`) prints the version of `bundown` installed. @jrysana
+- [x] `bundown --print <file.md>` (`-p`) pretty-prints the Markdown and syntax highlighted code blocks. @jrysana
+- [x] `bundown --help` (`-h`) prints a help message. @jrysana
 
 #### Improvements
 
-- [x] `bundown` now uses ANSI colors for more helpful usage messages & pretty-printing.
+- [x] `bundown` now uses ANSI colors for more helpful usage messages & pretty-printing. @jrysana
 
 ---
 
@@ -51,13 +58,11 @@
 
 #### Features
 
-- [x] `bundown` recognizes languages regardless of case, allowing uppercase language names in code blocks.
+- [x] `bundown` recognizes languages regardless of case, allowing uppercase language names in code blocks. @emileferreira
 
 #### Improvements
 
-- [x] `bundown` now uses a single parser loop to run faster in less lines of code.
-
-Thank you to everybody who contributed to this release: @emileferreira @arrysana @jrysana
+- [x] `bundown` now uses a single parser loop to run faster in less lines of code. @arrysana
 
 ---
 
@@ -65,10 +70,8 @@ Thank you to everybody who contributed to this release: @emileferreira @arrysana
 
 #### Features
 
-- [x] `bundown` can run multiple instances at once.
-- [x] `bundown` returns the same exit code as the code it ran.
-
-Thank you to everybody who contributed to this release: @KaruroChori @jrysana
+- [x] `bundown` can run multiple instances at once. @KaruroChori
+- [x] `bundown` returns the same exit code as the code it ran. @KaruroChori
 
 ---
 
@@ -76,7 +79,7 @@ Thank you to everybody who contributed to this release: @KaruroChori @jrysana
 
 #### Improvements
 
-- [x] `bundown` has developer tooling including `biome` code formatting via `bundown format.md` and a `.gitignore` file.
+- [x] `bundown` has developer tooling including `biome` code formatting via `bundown format.md` and a `.gitignore` file. @jrysana
 
 ---
 
@@ -84,7 +87,7 @@ Thank you to everybody who contributed to this release: @KaruroChori @jrysana
 
 #### Improvements
 
-- [x] `bundown` doesn't skip a code block if a supported language is specified in full but has extra whitespace/content on the language line.
+- [x] `bundown` doesn't skip a code block if a supported language is specified in full but has extra whitespace/content on the language line. @jrysana
 
 ---
 
@@ -92,5 +95,5 @@ Thank you to everybody who contributed to this release: @KaruroChori @jrysana
 
 #### Features
 
-- [x] `bundown <file.md>` runs TypeScript, JavaScript, and Shell code blocks in Markdown files.
-- [x] `bundown` can be installed globally using `npm`, `bun`, `pnpm`, or `yarn` and run from anywhere.
+- [x] `bundown <file.md>` runs TypeScript, JavaScript, and Shell code blocks in Markdown files. @jrysana
+- [x] `bundown` can be installed globally using `npm`, `bun`, `pnpm`, or `yarn` and run from anywhere. @jrysana

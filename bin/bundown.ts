@@ -8,14 +8,18 @@ const usage =
   `\n${magenta(bold('Bundown'))} is a fast Markdown runtime and bundler. ` +
   `${gray(`(${version})`)}\n
 ${bold(`Usage: bundown <file.md> ${cyan('[...flags]')}`)}\n
+${bold('Commands:')}
+  ${gray('./my-script.md')}    Execute a file with Bundown\n
+  ${bold(cyan('upgrade'))}           Upgrade to the latest version of Bundown\n
 ${bold('Flags:')}
-  ${cyan('-p')}, ${cyan('--print')}      Pretty-print source during execution
-  ${cyan('-v')}, ${cyan('--version')}    Print version and exit
-  ${cyan('-h')}, ${cyan('--help')}       Display this menu and exit\n`
+  ${cyan('-p')}, ${cyan('--print')}       Pretty-print source during execution
+  ${cyan('-v')}, ${cyan('--version')}     Print version and exit
+  ${cyan('-h')}, ${cyan('--help')}        Display this menu and exit\n`
 type Flags = Record<string, boolean | string>
 function parseArgs(args: string[]) {
   if (args.length === 0) return { flags: { help: true } }
-  const output: { path?: string; flags: Flags } = { flags: {} }
+  if (args.length === 1 && args[0] === 'upgrade') return { command: 'upgrade', flags: {} }
+  const output: { path?: string; flags: Flags; command?: string } = { flags: {} }
   for (let arg of args) {
     if (arg[0] === '-') {
       if (arg[1] !== '-') {
@@ -129,7 +133,16 @@ function parseMarkdown(markdown: string, flags: Flags) {
   return script
 }
 try {
-  const { path, flags } = parseArgs(process.argv.slice(2))
+  const { path, flags, command } = parseArgs(process.argv.slice(2))
+  if (command === 'upgrade') {
+    const bin = (await $`which bundown`.text()).replace(/bundown/g, '')
+    try {
+      await $`${bin.includes('bun') ? 'bun' : bin.includes('pnpm') ? 'pnpm' : 'npm'} i -g bundown`
+    } catch (error) {
+      throw new Error(`Failed to upgrade bundown: ${error}`)
+    }
+    process.exit(0)
+  }
   if (flags.help) {
     console.log(usage)
     process.exit(0)
