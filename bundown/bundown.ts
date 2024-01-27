@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 import { unlink } from 'node:fs/promises'
-import { $, type ShellOutput, file, write } from 'bun'
-import { bold, cyan, gray, magenta } from 'picocolors'
+import { file, semver, write } from 'bun'
+import { bold, cyan, gray, magenta, underline } from 'picocolors'
 import { version } from './package.json'
 const usage =
   `\n${magenta(bold('Bundown'))} is a fast Markdown runtime and bundler. ` +
@@ -14,6 +14,15 @@ ${bold('Flags:')}
   ${cyan('-p')}, ${cyan('--print')}       Pretty-print source during execution
   ${cyan('-v')}, ${cyan('--version')}     Print version and exit
   ${cyan('-h')}, ${cyan('--help')}        Display this menu and exit\n`
+if (!semver.satisfies(Bun.version, '^1.0.24')) {
+  console.log(usage)
+  console.error(
+    `\nBundown requires Bun version ^1.0.24, but found ${Bun.version}.\n` +
+      `Please run ${underline(bold('bun upgrade'))} to update to the latest version of Bun.\n`,
+  )
+  process.exit(1)
+}
+import { $, type ShellOutput } from 'bun'
 type Flags = Record<string, boolean | string>
 function parseArgs(args: string[]) {
   if (args.length === 0) return { flags: { help: true } }
