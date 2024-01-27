@@ -145,7 +145,9 @@ try {
   if (command === 'upgrade') {
     const bin = (await $`which bundown`.text()).replace(/bundown/g, '')
     try {
-      await $`${bin.includes('bun') ? 'bun' : bin.includes('pnpm') ? 'pnpm' : 'npm'} i -g bundown`
+      await $`${
+        bin.includes('bun') ? 'bun' : bin.includes('pnpm') ? 'pnpm' : 'npm'
+      } i -g bundown@latest`
     } catch (error) {
       throw new Error(`Failed to upgrade bundown: ${error}`)
     }

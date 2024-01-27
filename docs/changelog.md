@@ -4,6 +4,13 @@ See what's planned in [`roadmap.md`](roadmap.md)
 
 ---
 
+### `bundown@^0.0.10`
+
+#### Improvements
+- `bundown upgrade` fixed. @jrysana
+
+---
+
 ### `bundown@^0.0.9`
 
 #### Improvements
