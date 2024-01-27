@@ -10,13 +10,7 @@ It runs Markdown files, executing their Shell, JavaScript, and TypeScript code b
 
 ## Installation
 
-If you haven't already, start by installing Bun:
-
-```sh
-curl -fsSL https://bun.sh/install | bash
-```
-
-Next, install Bundown globally using Bun:
+You can install Bundown globally using [Bun](https://bun.sh):
 
 ```sh
 bun i -g bundown
@@ -30,19 +24,13 @@ Now you should be able to:
 
 `bundown upgrade`   to update Bundown
 
-## Contributing
-
-If you have any bugs, feature requests, etc. please open a [discussion](https://github.com/rysana-ai/bundown/discussions), [issue](https://github.com/rysana-ai/bundown/issues) or [pull request](https://github.com/rysana-ai/bundown/pulls) as appropriate.
-
-Before you open a PR, please use [`bundown run/format.md`](run/format.md) to format the code with `biome`.
-
-We also have a roadmap of planned features and bugs we'd like to fix at [`roadmap.md`](docs/roadmap.md) if you'd like to contribute by picking one up.
-
 ## Links
 
 - [Source](bundown/bundown.ts)
-- [Changelog](docs/changelog.md)
-- [Roadmap](docs/roadmap.md)
 - [MIT License](license)
+- Docs
+    - [Contributing](docs/contributing.md)
+    - [Changelog](docs/changelog.md)
+    - [Roadmap](docs/roadmap.md)
 - Scripts
     - [Format](run/format.md)
