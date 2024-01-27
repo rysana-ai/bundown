@@ -1,4 +1,4 @@
-![bundown logo](docs/bundown.svg)
+<img src='docs/bundown.svg' height=64>
 
 # Bundown
 
