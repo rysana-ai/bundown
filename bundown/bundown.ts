@@ -2,8 +2,7 @@
 import { unlink } from 'node:fs/promises'
 import { $, type ShellOutput, file, write } from 'bun'
 import { bold, cyan, gray, magenta } from 'picocolors'
-import { version } from '../package.json'
-
+import { version } from './package.json'
 const usage =
   `\n${magenta(bold('Bundown'))} is a fast Markdown runtime and bundler. ` +
   `${gray(`(${version})`)}\n

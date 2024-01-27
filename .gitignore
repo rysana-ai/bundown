@@ -1,4 +1,5 @@
 node_modules
+bun.lockb
 .pnp
 .pnp.js
 .idea

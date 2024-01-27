@@ -79,7 +79,7 @@
 
 #### Improvements
 
-- [x] `bundown` has developer tooling including `biome` code formatting via `bundown format.md` and a `.gitignore` file. @jrysana
+- [x] `bundown` has developer tooling including `biome` code formatting via `bundown run/format.md` and a `.gitignore` file. @jrysana
 
 ---
 

@@ -7,7 +7,7 @@
   "homepage": "https://github.com/rysana-ai/bundown",
   "bugs": "https://github.com/rysana-ai/bundown/issues",
   "repository": { "type": "git", "url": "https://github.com/rysana-ai/bundown.git" },
-  "bin": { "bundown": "./bin/bundown.ts" },
+  "bin": { "bundown": "./bundown.ts" },
   "dependencies": {
     "bun": "^1.0.25",
     "picocolors": "^1.0.0"
