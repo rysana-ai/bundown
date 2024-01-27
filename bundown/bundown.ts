@@ -2,7 +2,7 @@
 import { unlink } from 'node:fs/promises'
 import { file, semver, write } from 'bun'
 import { bold, cyan, gray, magenta, underline } from 'picocolors'
-import { version } from './package.json'
+import { dependencies, version } from './package.json'
 const usage =
   `\n${magenta(bold('Bundown'))} is a fast Markdown runtime and bundler. ` +
   `${gray(`(${version})`)}\n
@@ -14,17 +14,17 @@ ${bold('Flags:')}
   ${cyan('-p')}, ${cyan('--print')}       Pretty-print source during execution
   ${cyan('-v')}, ${cyan('--version')}     Print version and exit
   ${cyan('-h')}, ${cyan('--help')}        Display this menu and exit\n`
-if (!semver.satisfies(Bun.version, '^1.0.24')) {
+if (!semver.satisfies(Bun.version, dependencies.bun)) {
   console.log(usage)
   console.error(
-    `\nBundown requires Bun version ^1.0.24, but found ${Bun.version}.\n` +
+    `\nBundown requires Bun version ${dependencies.bun}, but found ${Bun.version}.\n` +
       `Please run ${underline(bold('bun upgrade'))} to update to the latest version of Bun.\n`,
   )
   process.exit(1)
 }
 import { $, type ShellOutput } from 'bun'
 type Flags = Record<string, boolean | string>
-function parseArgs(args: string[]) {
+const parseArgs = (args: string[]) => {
   if (args.length === 0) return { flags: { help: true } }
   if (args.length === 1 && args[0] === 'upgrade') return { command: 'upgrade', flags: {} }
   const output: { path?: string; flags: Flags; command?: string } = { flags: {} }
@@ -54,14 +54,13 @@ function parseArgs(args: string[]) {
   }
   return output
 }
-function printBlock(content: string, language: string) {
-  return `console.log(\`${
+const printBlock = (content: string, language: string) =>
+  `console.log(\`${
     (language === 'markdown' ? '\n' : gray(`\n\\\`\\\`\\\`${language}\n`)) +
     content.trim().replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\${/g, '\\${') +
     (language === 'markdown' ? '' : gray('\n\\`\\`\\`'))
   }\`)\n`
-}
-function parseMarkdown(markdown: string, flags: Flags) {
+const parseMarkdown = (markdown: string, flags: Flags) => {
   let state: 'text' | 'code-lang' | 'code-text' = 'text'
   let script = 'import { $ } from "bun"\n\n'
   let block = { language: '', content: '' }
@@ -83,27 +82,16 @@ function parseMarkdown(markdown: string, flags: Flags) {
         break
       case 'code-lang':
         if (markdown[j] === '\n') {
-          let language = block.language.split(/\s+/)[0].toLowerCase()
-          switch (language) {
-            case 'ts':
-              language = 'typescript'
-              break
-            case 'js':
-              language = 'javascript'
-              break
-            case 'sh':
-              language = 'shell'
-              break
-            case 'bash':
-              language = 'shell'
-              break
-            case 'zsh':
-              language = 'shell'
-              break
-            default:
-              language = ''
-          }
-          block.language = language || '?'
+          const language = block.language.split(/\s+/)[0].toLowerCase()
+          block.language =
+            {
+              ts: 'typescript',
+              js: 'javascript',
+              bash: 'shell',
+              zsh: 'shell',
+              sh: 'shell',
+            }[language] ??
+            (language || '?')
           state = 'code-text'
           break
         }
@@ -144,13 +132,8 @@ try {
   const { path, flags, command } = parseArgs(process.argv.slice(2))
   if (command === 'upgrade') {
     const bin = (await $`which bundown`.text()).replace(/bundown/g, '')
-    try {
-      await $`${
-        bin.includes('bun') ? 'bun' : bin.includes('pnpm') ? 'pnpm' : 'npm'
-      } i -g bundown@latest`
-    } catch (error) {
-      throw new Error(`Failed to upgrade bundown: ${error}`)
-    }
+    const packageManager = bin.includes('bun') ? 'bun' : bin.includes('pnpm') ? 'pnpm' : 'npm'
+    await $`${packageManager} i -g bundown@latest`
     process.exit(0)
   }
   if (flags.help) {
