@@ -37,3 +37,12 @@ If you have any bugs, feature requests, etc. please open a [discussion](https://
 Before you open a PR, please use [`bundown run/format.md`](run/format.md) to format the code with `biome`.
 
 We also have a roadmap of planned features and bugs we'd like to fix at [`roadmap.md`](docs/roadmap.md) if you'd like to contribute by picking one up.
+
+## Links
+
+- [Source](bundown/bundown.ts)
+- [Changelog](docs/changelog.md)
+- [Roadmap](docs/roadmap.md)
+- [MIT License](license)
+- Scripts
+    - [Format](run/format.md)
