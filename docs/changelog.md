@@ -36,7 +36,7 @@ See what's planned in [`roadmap.md`](roadmap.md)
 
 #### Features
 + `bundown --version` (`-v`) prints the version of `bundown` installed. @jrysana
-+ `bundown --print <file.md>` (`-p`) pretty-prints the Markdown and syntax highlighted code blocks. @jrysana
++ `bundown --print <file>` (`-p`) pretty-prints the Markdown and syntax highlighted code blocks. @jrysana
 + `bundown --help` (`-h`) prints a help message. @jrysana
 
 #### Improvements
@@ -79,5 +79,5 @@ See what's planned in [`roadmap.md`](roadmap.md)
 ### `bundown@^0.0.1`
 
 #### Features
-+ `bundown <file.md>` runs TypeScript, JavaScript, and Shell code blocks in Markdown files. @jrysana
++ `bundown <file>` runs TypeScript, JavaScript, and Shell code blocks in Markdown files. @jrysana
 + `bundown` can be installed globally using `npm`, `bun`, `pnpm`, or `yarn` and run from anywhere. @jrysana
