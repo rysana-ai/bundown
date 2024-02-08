@@ -208,26 +208,21 @@ try {
       }
     }
     if (flags.print) console.log()
-    console.log(ui.bold('bundown sync'), `from ${ui.cyan.bold(args[0])}:`)
+    console.log(ui.bold`bundown sync`)
     if (flags.print) console.log()
     const entries = Object.entries(files)
-    if (entries.length === 0) console.log(ui.red('No files found to sync.\n'))
+    if (entries.length === 0) console.log(ui.red`No files found to sync.\n`)
     for (const [filename, { lang, content }] of entries) {
       const path = join(args[1], filename)
       await write(path, content)
-      const info = ui.green(`synced to ${ui.bold(path)}`)
+      const info = ui.green`synced to ` + ui.bold(path)
       if (flags.print) {
-        console.log(
-          ui.gray(ui.box.top(info)) +
-            '\n' +
-            ui.highlight(lang, content.replace(/\n$/, '')) +
-            '\n' +
-            ui.gray(ui.box.bottom()),
-        )
+        console.log(ui.box.full(info)(ui.highlight(lang, content.replace(/\n$/, ''))))
       } else {
         console.log(info)
       }
     }
+    if (flags.print) console.log()
     process.exit(0)
   }
   if (args.length !== 1) {
@@ -251,7 +246,7 @@ try {
         aliases.some(alias => alias === node.lang?.toLowerCase()),
       )
       node.lang = language?.aliases?.[0] || 'txt'
-      print(ui.gray(ui.box.top(label)) + '\n' + ui.highlight(node.lang, node.value))
+      print(ui.box.full(label)(ui.highlight(node.lang, node.value)))
       const meta = parseCodeMeta(node.meta)
       if (
         !meta.flags.file &&
@@ -260,12 +255,12 @@ try {
           flags.tags?.some(tag => meta.flags.tags?.includes(tag))) &&
         language?.run
       ) {
-        print(ui.gray(ui.box.divider()))
+        print()
         language.run({ input: node.value, files })
       }
-      print(ui.gray(ui.box.bottom()))
+      print()
     } else {
-      print(ui.highlight('markdown', toMarkdown(node)))
+      print(ui.box.inset(ui.highlight('markdown', toMarkdown(node))))
     }
   }
   const dotbundown = `${process.env.HOME}/.bundown`
@@ -281,8 +276,8 @@ try {
     process.exit(shellOutput?.exitCode ?? 0)
   }
 } catch (bundownError) {
-  console.log('\n' + ui.red(ui.box.top(`Use ${ui.bold('bundown -h')} for help`)) + '\n')
+  console.log('\n' + ui.box.top(`Use ${ui.bold('bundown -h')} for help`, ui.red) + '\n')
   console.log(bundownError)
-  console.log(ui.red(ui.box.bottom()))
+  console.log(ui.box.bottom(ui.red))
   process.exit(1)
 }

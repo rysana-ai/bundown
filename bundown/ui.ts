@@ -1,7 +1,9 @@
 import chalk from 'chalk'
 import { common, createEmphasize } from 'emphasize'
 import stringWidth from 'string-width'
+import wrapAnsi from 'wrap-ansi'
 const emphasize = createEmphasize(common)
+export const reset = chalk.reset
 export const bold = chalk.bold
 export const gray = chalk.hex('777')
 export const blue = chalk.hex('5bd')
@@ -49,16 +51,36 @@ export function highlight(language: string, input: string) {
     formula: chalk.inverse,
   }).value
 }
-const columns = process.stdout.columns
+export const vw = process.stdout.columns
+export function wrap(input: string, columns: number) {
+  return wrapAnsi(input, columns, { hard: true, trim: false })
+}
+type Formatter = (input: string) => string
 export const box = {
-  top(label = '') {
-    return chalk.dim('╭─') + label + chalk.dim('─'.repeat(columns - stringWidth(label) - 3) + '╮')
+  top(label = '', format: Formatter = chalk.gray.dim) {
+    return format('╭─') + label + format('─'.repeat(vw - stringWidth(label) - 3) + '╮')
   },
-  divider() {
-    return chalk.dim('├' + '─'.repeat(columns - 2) + '┤')
+  middle(input: string, format: Formatter = chalk.gray.dim) {
+    return wrap(input, vw - 4)
+      .split('\n')
+      .map(line => format('│ ') + line + ' '.repeat(vw - stringWidth(line) - 4) + format(' │'))
+      .join('\n')
   },
-  bottom() {
-    return chalk.dim('╰' + '─'.repeat(columns - 2) + '╯\n')
+  inset(input: string) {
+    return wrap(input, vw - 4)
+      .split('\n')
+      .map(line => '  ' + line)
+      .join('\n')
+  },
+  divider(format: Formatter = chalk.gray.dim) {
+    return format('├' + '─'.repeat(vw - 2) + '┤')
+  },
+  bottom(format: Formatter = chalk.gray.dim) {
+    return format('╰' + '─'.repeat(vw - 2) + '╯')
+  },
+  full(label = '', format: Formatter = chalk.gray.dim) {
+    return (input: string) =>
+      box.top(label, format) + '\n' + box.middle(input, format) + '\n' + box.bottom(format)
   },
 }
 export function table(options: { columns?: number[] } = {}) {

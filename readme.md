@@ -46,6 +46,10 @@ Now you should be able to:
 
 See what's planned in [the roadmap.](#roadmap)
 
+### `^0.1.2`
++ **Improvements**
+    + `bundown --print` uses improved box drawing for run & sync code printing.
+
 ### `^0.1.0`
 + **Features**
     + `bundown run <file>` now aliases `bundown <file>`.
