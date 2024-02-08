@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.5.2/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
   "formatter": {
     "enabled": true,
@@ -48,7 +48,6 @@
         "useAwait": "error",
         "useConsistentArrayType": "error",
         "useFilenamingConvention": "off",
-        "useForOf": "error",
         "useExportType": "error",
         "useImportType": "error",
         "useGroupedTypeImport": "error",
