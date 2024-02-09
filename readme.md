@@ -1,17 +1,8 @@
-<img src='bundown/bundown.svg' height=64>
+# <img alt="Bundown" src='bundown/bundown.svg'>
 
-# Bundown
+[![bundown license](https://img.shields.io/npm/l/bundown.svg?colorB=567&label)](https://github.com/rysana-ai/bundown/blob/main/license) [![bundown package version](https://img.shields.io/npm/v/bundown.svg?colorB=284&label)](https://www.npmjs.com/package/bundown) [![bundown source code size](https://img.shields.io/github/languages/code-size/rysana-ai/bundown?colorB=44e&label)](https://github.com/rysana-ai/bundown) [![bundown speed](https://img.shields.io/static/v1?label&message=blazingly%20fast&color=b22)](https://twitter.com/jrysana/status/1754329326600741266)
 
-**Bundown** is a fast all-in-one Markdown runtime and bundler, built on [Bun](https://bun.sh).
-
-It runs Markdown files, executing their Shell, JavaScript, and TypeScript code blocks.
-
-[![bundown license](https://img.shields.io/npm/l/bundown.svg?colorB=567&label)](https://github.com/rysana-ai/bundown/blob/main/license) [![bundown package version](https://img.shields.io/npm/v/bundown.svg?colorB=2b4&label)](https://www.npmjs.com/package/bundown) [![bundown source code size](https://img.shields.io/github/languages/code-size/rysana-ai/bundown?colorB=44e&label)](https://github.com/rysana-ai/bundown) [![bundown speed](https://img.shields.io/static/v1?label&message=blazingly%20fast&color=b22)](https://twitter.com/jrysana/status/1754329326600741266)
-
-
-
-
-## Installation
+**Bundown** is a fast all-in-one Markdown runtime and bundler.
 
 You can install `bundown` (`bd`) globally using [Bun](https://bun.sh):
 
@@ -19,25 +10,31 @@ You can install `bundown` (`bd`) globally using [Bun](https://bun.sh):
 bun i -g bundown
 ```
 
-Now you should be able to:
-
-+ `bundown run`        to run a Markdown file from a path or URL
-+ `bundown sync`       to pack/unpack code between files and Markdown
-+ `bundown -h`         to view help 
-+ `bundown upgrade`    to update Bundown
+Bundown runs TS, JS, and Shell code. It pretty-prints and syncs code in almost any language.
 
 
 
 
 ## Links
 
-+ [Source](bundown/bundown.ts)
++ [Usage](#usage)
 + [Changelog](#changelog)
 + [Contributing](#contributing)
 + [Roadmap](#roadmap)
 + [Scripts](#scripts)
     + [Format](#format)
++ [Source](bundown/bundown.ts)
 + [MIT License](license)
+
+
+
+
+## Usage
+
++ `bundown run`        to run a Markdown file from a path or URL
++ `bundown sync`       to pack/unpack code between files and Markdown
++ `bundown -h`         to view help 
++ `bundown upgrade`    to update Bundown
 
 
 
