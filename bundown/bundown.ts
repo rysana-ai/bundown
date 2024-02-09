@@ -236,7 +236,7 @@ try {
       files.script += `console.log(\`${input
         .replace(/\\/g, '\\\\')
         .replace(/`/g, '\\`')
-        .replace(/${/g, '\\${')}\`)\n`
+        .replace(/\$/g, '\\$')}\`)\n`
   }
   print()
   for (const node of tree.children) {
@@ -255,7 +255,6 @@ try {
           flags.tags?.some(tag => meta.flags.tags?.includes(tag))) &&
         language?.run
       ) {
-        print()
         language.run({ input: node.value, files })
       }
       print()
