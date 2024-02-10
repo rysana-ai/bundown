@@ -3,9 +3,8 @@ import { readdir } from 'node:fs/promises'
 import { platform } from 'node:os'
 import { join } from 'node:path'
 import { type BunFile, CryptoHasher, file, semver, write } from 'bun'
-import { fromMarkdown } from 'mdast-util-from-markdown'
-import { toMarkdown } from 'mdast-util-to-markdown'
 import { languages } from './languages'
+import { Markdown } from './markdown'
 import { dependencies, version } from './package.json'
 import * as ui from './ui'
 const os = platform()
@@ -191,7 +190,7 @@ try {
     if (destination.type === 'file' || destination.type === 'url') {
       throw new Error('Bundown sync requires a directory as the destination.')
     }
-    const tree = fromMarkdown(await sourceToMarkdown(source))
+    const tree = Markdown.parse(await sourceToMarkdown(source))
     const files: Record<string, { lang: string; content: string }> = {}
     for (const node of tree.children) {
       if (node.type === 'code') {
@@ -229,7 +228,7 @@ try {
     throw new Error('Bundown run requires a single argument: source (path, URL, etc.)')
   }
   const markdown = await sourceToMarkdown(await resolveSource(args[0]))
-  const tree = fromMarkdown(markdown)
+  const tree = Markdown.parse(markdown)
   const files: Record<string, string> = { script: 'import { $ } from "bun"\n\n' }
   function print(input = '', force = false) {
     if (flags.print || force)
@@ -259,7 +258,7 @@ try {
       }
       print()
     } else {
-      print(ui.box.inset(ui.highlight('markdown', toMarkdown(node))))
+      print(ui.box.inset(Markdown.stringify(node)))
     }
   }
   const dotbundown = `${process.env.HOME}/.bundown`
