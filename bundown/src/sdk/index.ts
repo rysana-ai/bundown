@@ -1,6 +1,7 @@
 import { dependencies, version } from '../../package.json'
 import { language } from './language'
 import { path } from './path'
+import { uri } from './uri'
 
 import type { Nodes, Node, Code } from 'mdast'
 import { fromMarkdown } from 'mdast-util-from-markdown'
@@ -17,6 +18,7 @@ export const sdk = {
   package: { dependencies, version },
   language,
   path,
+  uri,
   os: {
     platform,
     has: {
