@@ -1,13 +1,12 @@
 #!/usr/bin/env bun
 import { readdir } from 'node:fs/promises'
-import { platform } from 'node:os'
 import { join } from 'node:path'
 import { type BunFile, CryptoHasher, file, semver, write } from 'bun'
 import { languages } from './languages'
-import { Markdown } from './markdown'
-import { dependencies, version } from './package.json'
-import * as ui from './ui'
-const os = platform()
+import { version } from '../../package.json'
+import * as ui from '../cli/ui'
+import { sdk } from '../sdk/index'
+
 const usage =
   `\n${ui.magenta.bold`Bundown`} is a fast Markdown runtime and bundler. ` +
   `${ui.gray(`(${version})`)}\n
@@ -31,7 +30,7 @@ ${ui.table({ columns: [3, 10, 11, 40] })([
 ${ui.bold`Blocks:`}
 ${ui.table({ columns: [3, 10, 11, 40] })([
   [ui.cyan`-t` + ',', ui.cyan`--tag`, ui.gray`<tag>`, 'Tag block for filtering'],
-  ['', ui.cyan`--os`, ui.gray(os), 'Only run on chosen operating system'],
+  ['', ui.cyan`--os`, ui.gray(sdk.os.platform), 'Only run on chosen operating system'],
   [ui.cyan`-f` + ',', ui.cyan`--file`, ui.gray`<file>`, 'Link block to a file path'],
 ])}
 Learn more about Bundown:    ${ui.blue`https://rysana.com/bundown`}\n`
@@ -64,6 +63,7 @@ function parseArgs(args: string[]) {
         output.flags.tags?.push(args[++j])
         continue
       }
+      // @ts-ignore
       output.flags[arg.slice(2)] = true
       continue
     }
@@ -79,10 +79,11 @@ function parseArgs(args: string[]) {
   return output
 }
 const { flags, command, args } = parseArgs(process.argv.slice(2))
-if (!semver.satisfies(Bun.version, dependencies.bun)) {
+const bunVersionExpected = '1.0.26'
+if (!semver.satisfies(Bun.version, bunVersionExpected)) {
   console.log(usage)
   console.error(
-    `\nBundown requires Bun version ${dependencies.bun}, but found ${Bun.version}.\n` +
+    `\nBundown requires Bun version ${bunVersionExpected}, but found ${Bun.version}.\n` +
       `Please run ${ui.bold.underline`bun upgrade`} to update to the latest version of Bun.\n`,
   )
   process.exit(1)
@@ -190,7 +191,7 @@ try {
     if (destination.type === 'file' || destination.type === 'url') {
       throw new Error('Bundown sync requires a directory as the destination.')
     }
-    const tree = Markdown.parse(await sourceToMarkdown(source))
+    const { tree } = sdk.markdown.from.text((await sourceToMarkdown(source)))
     const files: Record<string, { lang: string; content: string }> = {}
     for (const node of tree.children) {
       if (node.type === 'code') {
@@ -228,11 +229,11 @@ try {
     throw new Error('Bundown run requires a single argument: source (path, URL, etc.)')
   }
   const markdown = await sourceToMarkdown(await resolveSource(args[0]))
-  const tree = Markdown.parse(markdown)
+  const { tree } = sdk.markdown.from.text(markdown)
   const files: Record<string, string> = { script: 'import { $ } from "bun"\n\n' }
   function print(input = '', force = false) {
     if (flags.print || force)
-      files.script += `console.log(\`${input
+      files['script'] += `console.log(\`${input
         .replace(/\\/g, '\\\\')
         .replace(/`/g, '\\`')
         .replace(/\$/g, '\\$')}\`)\n`
@@ -249,7 +250,7 @@ try {
       const meta = parseCodeMeta(node.meta)
       if (
         !meta.flags.file &&
-        (!meta.flags.os || os === meta.flags.os) &&
+        (!meta.flags.os || sdk.os.platform === meta.flags.os) &&
         ((!flags.tags?.length && !meta.flags.tags?.length) ||
           flags.tags?.some(tag => meta.flags.tags?.includes(tag))) &&
         language?.run
@@ -258,17 +259,15 @@ try {
       }
       print()
     } else {
-      print(ui.box.inset(Markdown.stringify(node)))
+      print(ui.box.inset(ui.highlight('markdown', sdk.markdown.to.text({ markdown: { tree: node } }))))
     }
   }
-  const dotbundown = `${process.env.HOME}/.bundown`
+  const dotbundown = `${process.env['HOME']}/.bundown`
   const filename = `${dotbundown}/tmp/${sha256(crypto.randomUUID())}.ts`
-  await write(filename, files.script)
+  await write(filename, files['script'])
   let shellOutput: ShellOutput | undefined = undefined
   try {
     shellOutput = await $`FORCE_COLOR=1 bun ${filename}`
-  } catch (processError) {
-    throw new Error(processError)
   } finally {
     await $`rm -rf ${dotbundown}/tmp/`
     process.exit(shellOutput?.exitCode ?? 0)
