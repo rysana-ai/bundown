@@ -1,4 +1,6 @@
 import { dependencies, version } from '../../package.json'
+import { language } from './language'
+import { path } from './path'
 
 import type { Nodes, Node, Code } from 'mdast'
 import { fromMarkdown } from 'mdast-util-from-markdown'
@@ -13,6 +15,8 @@ import { $, semver, file, write, CryptoHasher } from 'bun'
 
 export const sdk = {
   package: { dependencies, version },
+  language,
+  path,
   os: {
     platform,
     has: {
