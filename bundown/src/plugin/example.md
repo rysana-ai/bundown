@@ -1,8 +1,23 @@
 # example
 
+```bash
+echo "Hello from example.md"
+```
+
 ```typescript
-import README from '../README.md'
+console.log(Date.now())
+```
+
+```typescript
+import EXAMPLE from '../src/plugin/example.md'
 
 console.log('Hello from bundown!')
-console.log('markdown ast', README.markdown.tree)
+
+// This is recursive.
+// Running example.md will execute the
+// bash and typescript blocks above.
+// Then, the following line will execute,
+// which runs example.md all over again!
+// It's bundown from inside bundown!
+EXAMPLE.run()
 ```

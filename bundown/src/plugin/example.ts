@@ -1,3 +1,3 @@
-import README from '../../README.md'
+import EXAMPLE from './example.md'
 
-README.run()
+EXAMPLE.run()

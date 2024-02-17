@@ -1,6 +1,6 @@
 telemetry = false
 
+preload = ["./src/plugin/register.ts"]
+
 [install.lockfile]
 print = "yarn"
-
-preload = ["./src/plugin/register.ts"]

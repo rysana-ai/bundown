@@ -1,5 +1,6 @@
 import { dependencies, version } from '../../package.json'
 import { language } from './language'
+import { runtime } from './runtime'
 import { path } from './path'
 import { uri } from './uri'
 
@@ -17,6 +18,7 @@ import { $, semver, file, write, CryptoHasher } from 'bun'
 export const sdk = {
   package: { dependencies, version },
   language,
+  runtime,
   path,
   uri,
   os: {
