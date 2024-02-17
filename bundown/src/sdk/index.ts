@@ -13,6 +13,7 @@ import { gfm } from 'micromark-extension-gfm'
 import { math } from 'micromark-extension-math'
 import { visit } from 'unist-util-visit'
 import { platform } from 'node:process'
+import { parseArgs } from 'node:util'
 import { $, semver, file, write, CryptoHasher } from 'bun'
 
 export const sdk = {
@@ -100,6 +101,22 @@ export const sdk = {
     blocks: {
       filter: ({ markdown, filter }: { markdown: { tree: Nodes }, filter?: (node: Node) => boolean }) => {
         return sdk.markdown.nodes.filter({ markdown, filter: (node) => node.type === 'code' && (filter ? filter(node) : true) }) as Code[]
+      }
+    },
+    block: {
+      args: ({ block }: { block: Code }) => {
+        if (!block.meta) return undefined
+        return parseArgs({
+          args: [...block.meta.split(/\s+/)],
+          strict: true,
+          allowPositionals: false,
+          options: {
+            file:    { short: 'f', type: 'string', multiple: false },
+            os:      {             type: 'string', multiple: false },
+            runtime: { short: 'r', type: 'string', multiple: false },
+            tag:     { short: 't', type: 'string', multiple: true  }
+          }
+        })
       }
     }
   }

@@ -1,4 +1,5 @@
 export type Language = (typeof languages)[number]['name']
+export type Alias = (typeof languages)[number]['aliases'][number]
 
 const languages = [
   { name: 'JavaScript', aliases: ['js', 'javascript', 'jsx', 'cjs', 'mjs'] },

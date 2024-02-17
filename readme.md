@@ -23,7 +23,7 @@ Bundown runs TS, JS, and Shell code. It pretty-prints and syncs code in almost a
 + [Roadmap](#roadmap)
 + [Scripts](#scripts)
     + [Format](#format)
-+ [Source](bundown/bundown.ts)
++ [Source](bundown/src/index.ts)
 + [MIT License](license)
 
 
@@ -41,7 +41,7 @@ Bundown runs TS, JS, and Shell code. It pretty-prints and syncs code in almost a
 
 ## Changelog
 
-See what's planned in [the roadmap.](#roadmap)
+See what's planned in the [roadmap](#roadmap).
 
 ### `^0.1.2`
 + **Improvements**
@@ -135,7 +135,7 @@ We also have a [roadmap](#roadmap) of planned features and bugs we'd like to fix
 
 ## Roadmap
 
-See what's already been done in [the changelog.](#changelog) Please suggest changes.
+See what's already been done in the [changelog](#changelog). Please suggest changes.
 
 + **Features**
     + `bundown sync <url> <file>` downloads and over(writes) the Markdown file from `<url>` into `<file>`.

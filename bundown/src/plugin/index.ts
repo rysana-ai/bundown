@@ -47,8 +47,8 @@ export function plugin (): BunPlugin {
         // Using the special bun loader for JS objects.
         return { loader: 'object', exports }
       })
-      // When a .sh, .bash, .py, .go file is imported (the way bun works, this won't be called with .bun.sh):
-      build.onLoad({ filter: /\.(sh|bash|py|go)$/ }, async (args) => {
+      // When a .sh, .py, .go file is imported (the way bun works, this won't be called with .bun.sh):
+      build.onLoad({ filter: /\.(sh|py|go)$/ }, async (args) => {
         // Import the SDK, which contains a runtime utility.
         const { runtime } = await import('../sdk/runtime')
         // If the file is being run with `bun <file>`, execute the file.

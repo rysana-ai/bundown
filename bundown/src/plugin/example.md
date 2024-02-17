@@ -8,6 +8,10 @@ echo "Hello from example.md"
 console.log(Date.now())
 ```
 
+```typescript -f ./src/plugin/test.ts
+console.log(`This won't run, since it uses -f`)
+```
+
 ```typescript
 import EXAMPLE from '../src/plugin/example.md'
 

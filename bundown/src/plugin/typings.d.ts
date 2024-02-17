@@ -22,11 +22,6 @@ declare module "*.sh" {
   export default exports;
 }
 
-declare module "*.bash" {
-  const exports: import('./index').CallExports;
-  export default exports;
-}
-
 declare module "*.py" {
   const exports: import('./index').CallExports;
   export default exports;
