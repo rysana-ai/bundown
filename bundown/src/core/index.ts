@@ -38,6 +38,7 @@ export function prepare ({ path, markdown }: { path: string, markdown: { tree: R
           if (block.data.shouldRun) {
             const path = block.data.safePrefixedPath || block.data.tempPath
             if (!path) throw new Error('Missing runtime path for block')
+            if (path.startsWith('./.bundown/temp/')) await write('./.bundown/temp/.gitignore', '*\n')
             await sdk.text.to.path({ text: block.value, path })
             const { exitCode } = await sdk.runtime.call({ runtime: block.data.runtime, path, args: [] }) 
             if (exitCode !== 0) throw new Error(`Non-zero (${exitCode}) exit code for block at ${block.data.location}`)
@@ -121,7 +122,8 @@ export function enrich (params: { path: string, block: Code, tag?: string[] }) {
     block.data.extension = '.go'
   }
   if (block.data.extension) {
-    block.data.tempPath = `${process.env['HOME'] || '.'}/.bundown/tmp/${block.data.contentSha512}${block.data.extension}`
+    // A relative local path is necessary (at least for now) to resolve relative import paths
+    block.data.tempPath = `./.bundown/temp/${block.data.contentSha512}${block.data.extension}`
   }
   // Hash the block config with sha512. This should only be done after all
   // potentially cacheable resolution steps.
