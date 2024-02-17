@@ -5,35 +5,9 @@ import { type BunFile, CryptoHasher, file, semver, write } from 'bun'
 import { languages } from './languages'
 import { version } from '../../package.json'
 import * as ui from '../cli/ui'
+import { usage } from '../cli/usage'
 import { sdk } from '../sdk/index'
 
-const usage =
-  `\n${ui.magenta.bold`Bundown`} is a fast Markdown runtime and bundler. ` +
-  `${ui.gray(`(${version})`)}\n
-${ui.bold(`Usage: bundown <commmand> ${ui.cyan`[...flags]`} [...args]`)}\n
-${ui.bold`Commands:`}
-${ui.table({ columns: [26, 40] })([
-  [ui.magenta.bold`run` + ui.gray`? app.md`, 'Execute a file with Bundown,'],
-  [ui.gray`     app`, '..from a directory,'],
-  [ui.gray`     https://.../app.md`, '..from a URL\n'],
-  [ui.yellow.bold`sync` + ui.gray` app.md app`, 'Unpack a file to a directory,'],
-  [ui.yellow.bold`sync` + ui.gray` app app.md`, 'or pack a directory into a file\n'],
-  [ui.cyan.bold`upgrade`, 'Upgrade to the latest version of Bundown'],
-])}
-${ui.bold`Flags:`}
-${ui.table({ columns: [3, 10, 11, 40] })([
-  [ui.cyan`-t` + ',', ui.cyan`--tag`, ui.gray`<tag>`, 'Filter code blocks by tag'],
-  [ui.cyan`-p` + ',', ui.cyan`--print`, '', 'Pretty-print source during execution'],
-  [ui.cyan`-v` + ',', ui.cyan`--version`, '', 'Print version and exit'],
-  [ui.cyan`-h` + ',', ui.cyan`--help`, '', 'Display this menu and exit'],
-])}
-${ui.bold`Blocks:`}
-${ui.table({ columns: [3, 10, 11, 40] })([
-  [ui.cyan`-t` + ',', ui.cyan`--tag`, ui.gray`<tag>`, 'Tag block for filtering'],
-  ['', ui.cyan`--os`, ui.gray(sdk.os.platform), 'Only run on chosen operating system'],
-  [ui.cyan`-f` + ',', ui.cyan`--file`, ui.gray`<file>`, 'Link block to a file path'],
-])}
-Learn more about Bundown:    ${ui.blue`https://rysana.com/bundown`}\n`
 type Flags = { help?: boolean; version?: boolean; print?: boolean; tags?: string[] }
 type Args = { flags: Flags; command?: string; args: string[] }
 function parseArgs(args: string[]) {
@@ -81,7 +55,7 @@ function parseArgs(args: string[]) {
 const { flags, command, args } = parseArgs(process.argv.slice(2))
 const bunVersionExpected = '1.0.26'
 if (!semver.satisfies(Bun.version, bunVersionExpected)) {
-  console.log(usage)
+  console.log(usage({ version, os: sdk.os.platform }))
   console.error(
     `\nBundown requires Bun version ${bunVersionExpected}, but found ${Bun.version}.\n` +
       `Please run ${ui.bold.underline`bun upgrade`} to update to the latest version of Bun.\n`,
@@ -172,7 +146,7 @@ try {
     process.exit(0)
   }
   if (flags.help) {
-    console.log(usage)
+    console.log(usage({ version, os: sdk.os.platform }))
     process.exit(0)
   }
   if (flags.version) {
