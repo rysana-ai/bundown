@@ -1,7 +1,8 @@
 import { dependencies, version } from '../../package.json'
 import { language } from './language'
-import { runtime } from './runtime'
+import { os } from './os'
 import { path } from './path'
+import { runtime } from './runtime'
 import { uri } from './uri'
 
 import type { Nodes, Node, Code } from 'mdast'
@@ -12,46 +13,16 @@ import { toMarkdown } from 'mdast-util-to-markdown'
 import { gfm } from 'micromark-extension-gfm'
 import { math } from 'micromark-extension-math'
 import { visit } from 'unist-util-visit'
-import { platform } from 'node:process'
 import { parseArgs } from 'node:util'
-import { $, semver, file, write, CryptoHasher } from 'bun'
+import { CryptoHasher, file, write } from 'bun'
 
 export const sdk = {
   package: { dependencies, version },
   language,
-  runtime,
+  os,
   path,
+  runtime,
   uri,
-  os: {
-    platform,
-    has: {
-      version: async (params: { name: string, version: { command: string, expected: string } }) => {
-        const osHasBin = await sdk.os.has.bin({ name: params.name })
-        if (!osHasBin.has) return { has: false } as const
-        const version = await $`${osHasBin.bin} ${params.version.command}`
-        if (version.exitCode === 1) return { has: false } as const
-        const versionString = version.stdout.toString('utf-8')
-        if (versionString !== params.version.expected) return { has: false } as const
-        const order = semver.order(versionString, params.version.expected)
-        const compatibility = order === 0 ? 'versions are equal' :
-          order === 1  ? 'os is newer than expected' :
-          order === -1 ? 'os is older than expected' :
-          undefined
-        return {
-          has: true,
-          bin: osHasBin.bin,
-          version: versionString,
-          compatibility,
-          semver: semver.satisfies(versionString, params.version.expected)
-        } as const
-      },
-      bin: async (params: { name: string }) => {
-        const bin = await $`command -v ${params.name}`
-        if (bin.exitCode === 0) return { has: true, bin: bin.stdout.toString('utf-8') } as const
-        return { has: false } as const
-      }
-    }
-  },
   hash: {
     sha512: {
       from: {
@@ -90,6 +61,9 @@ export const sdk = {
       }
     },
     nodes: {
+      visit: ({ markdown, visitor }: { markdown: { tree: Nodes }, visitor: (node: Node) => void }) => {
+        visit(markdown.tree, visitor)
+      },
       filter: ({ markdown, filter }: { markdown: { tree: Nodes }, filter: (node: Node) => boolean }) => {
         const result: Node[] = []
         visit(markdown.tree, (node) => {
@@ -111,10 +85,10 @@ export const sdk = {
           strict: true,
           allowPositionals: false,
           options: {
-            file:    { short: 'f', type: 'string', multiple: false },
-            os:      {             type: 'string', multiple: false },
-            runtime: { short: 'r', type: 'string', multiple: false },
-            tag:     { short: 't', type: 'string', multiple: true  }
+            file:     { short: 'f', type: 'string', multiple: false },
+            runtime:  { short: 'r', type: 'string', multiple: false },
+            tag:      { short: 't', type: 'string', multiple: true  },
+            os:       {             type: 'string', multiple: true  }
           }
         })
       }

@@ -1,17 +1,21 @@
-import { resolve } from 'node:path'
 import { lstat } from 'node:fs/promises'
-import { type BunFile, Glob, file } from 'bun'
 
 export type UriType =
-  | { type: 'file', path: string, resolved: string }
+  | { type: 'directory', path: string }
+  | { type: 'file', path: string }
   | { type: 'url', url: URL }
   | { type: 'github', org: string, repository: string, url: URL }
   | { type: 'gist', user: string, id: string, url: URL }
-  | { type: 'multiple', sources: Array<UriType> }
 
 async function resolveUri (uri: string): Promise<UriType | undefined> {
   if (!uri) {
     return undefined
+  }
+  if (uri.startsWith('/') || uri.startsWith('./')) {
+    if ((await lstat(uri)).isDirectory()) {
+      return { type: 'directory', path: uri }
+    }
+    return { type: 'file', path: uri }
   }
   if (uri.startsWith('http://') || uri.startsWith('https://')) {
     return { type: 'url', url: new URL(uri) }
@@ -26,18 +30,6 @@ async function resolveUri (uri: string): Promise<UriType | undefined> {
     const [user, id, ...rest] = uri.substring('gist://'.length).split('/')
      if (!user || !id || rest.length !== 0) return undefined
     return { type: 'gist', user, id, url: new URL(`https://gist.githubusercontent.com/${encodeURIComponent(user)}/${encodeURIComponent(id)}/raw`) }
-  }
-  if (uri.startsWith('/') || uri.startsWith('./')) {
-    if (resolve(uri) === '/') return undefined
-    if ((await lstat(uri)).isDirectory()) {
-      const sources: Array<UriType> = []
-      const glob = new Glob('**/*.md')
-      for await (const path of glob.scan('.')) {
-        sources.push({ type: 'file', path, resolved: resolve(path) })
-      }
-      return { type: 'multiple', sources }
-    }
-    return { type: 'file', path: uri, resolved: resolve(uri) }
   }
   return undefined
 }

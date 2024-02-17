@@ -3,7 +3,7 @@
 import { usage } from './usage'
 import { log } from './log'
 import { sdk } from '../sdk/index'
-import { sync, run } from '../v1/bundown'
+import { sync, run } from '../core/index'
 
 import { $, semver } from 'bun'
 import { parseArgs } from 'node:util'
@@ -26,7 +26,7 @@ export async function cli (params: { args: string[] }): Promise<void> {
       os:      {             type: 'string',  multiple: false },
     }
   })
-  const expectedBunVersion = '^1.0.26'
+  const expectedBunVersion = '^1.0.27'
   const bunVersion = {
     expectedBunVersion,
     satisfied: semver.satisfies(Bun.version, expectedBunVersion),
@@ -78,7 +78,7 @@ export async function cli (params: { args: string[] }): Promise<void> {
   })
   .with({ args: { positionals: ['run', P.string.minLength(1), ...P.array(P.nullish)] } }, ({ args }) => {
     return async () => {
-      await run({ source: args.positionals[1] })
+      await run({ source: args.positionals[1], tag: args.values.tag, print: args.values.print })
     }
   })
   .with({ args: { positionals: ['run'] } }, () => {
@@ -88,7 +88,7 @@ export async function cli (params: { args: string[] }): Promise<void> {
   })
   .with({ args: { positionals: [P.string.minLength(1), ...P.array(P.nullish)] } }, ({ args }) => {
     return async () => {
-      await run({ source: args.positionals[0] })
+      await run({ source: args.positionals[0], tag: args.values.tag, print: args.values.print })
     }
   })
   .with({ args: { positionals: [P.string, ...P.array(P.string)] } }, ({ args }) => {
@@ -111,8 +111,8 @@ export async function cli (params: { args: string[] }): Promise<void> {
 }
 
 export class CliError extends Error {
-  constructor (message: string, cause?: unknown) {
-    super(message, { cause })
+  constructor (message: string) {
+    super(message)
   }
 }
 

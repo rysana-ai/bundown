@@ -7,6 +7,11 @@
     "jsx": "react-jsx",
     "allowJs": true,
 
+    /* Re-write import paths */
+    "paths": {
+      "@/*": ["./*"]
+    },
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

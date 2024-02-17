@@ -10,7 +10,7 @@ You can install `bundown` (`bd`) globally using [Bun](https://bun.sh):
 bun i -g bundown
 ```
 
-Bundown runs TS, JS, and Shell code. It pretty-prints and syncs code in almost any language.
+Bundown runs TS, JS, Python, Go, and Shell code. It pretty-prints and syncs code in almost any language.
 
 
 
@@ -35,6 +35,51 @@ Bundown runs TS, JS, and Shell code. It pretty-prints and syncs code in almost a
 + `bundown sync`       to pack/unpack code between files and Markdown
 + `bundown -h`         to view help 
 + `bundown upgrade`    to update Bundown
+
+
+
+
+## Example
+
+You can write runnable markdown documents.
+
+`bundown` is just `bun` + `markdown` that runs!
+
+Run this example document by creating an `example.md` file and running `bundown example.md`. You'll notice that `bundown` knows how to run your code blocks.
+
+````markdown
+# example
+
+```shell
+echo "Hello from example.md"
+```
+
+```typescript -t time
+console.log('This only runs with --tag "time"', Date.now())
+```
+
+```typescript -f ./src/plugin/test.ts
+console.log(`This won't run, since it uses -f`)
+```
+
+```typescript --os mac --os linux
+console.log(`This only runs on mac or linux`)
+```
+
+```python
+print("Python works too!")
+```
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Go works too!")
+}
+```
+````
 
 
 
