@@ -10,7 +10,7 @@ You can install `bundown` (`bd`) globally using [Bun](https://bun.sh):
 bun i -g bundown
 ```
 
-Bundown runs TS, JS, and Shell code. It pretty-prints and syncs code in almost any language.
+Bundown runs TS, JS, Python, Go, and Shell code. It pretty-prints and syncs code in almost any language.
 
 
 
@@ -23,7 +23,7 @@ Bundown runs TS, JS, and Shell code. It pretty-prints and syncs code in almost a
 + [Roadmap](#roadmap)
 + [Scripts](#scripts)
     + [Format](#format)
-+ [Source](bundown/bundown.ts)
++ [Source](bundown/src/index.ts)
 + [MIT License](license)
 
 
@@ -39,9 +39,54 @@ Bundown runs TS, JS, and Shell code. It pretty-prints and syncs code in almost a
 
 
 
+## Example
+
+You can write runnable markdown documents.
+
+`bundown` is just `bun` + `markdown` that runs!
+
+Run this example document by creating an `example.md` file and running `bundown example.md`. You'll notice that `bundown` knows how to run your code blocks.
+
+````markdown
+# example
+
+```shell
+echo "Hello from example.md"
+```
+
+```typescript -t time
+console.log('This only runs with --tag "time"', Date.now())
+```
+
+```typescript -f ./src/plugin/test.ts
+console.log(`This won't run, since it uses -f`)
+```
+
+```typescript --os mac --os linux
+console.log(`This only runs on mac or linux`)
+```
+
+```python
+print("Python works too!")
+```
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Go works too!")
+}
+```
+````
+
+
+
+
 ## Changelog
 
-See what's planned in [the roadmap.](#roadmap)
+See what's planned in the [roadmap](#roadmap).
 
 ### `^0.1.2`
 + **Improvements**
@@ -135,7 +180,7 @@ We also have a [roadmap](#roadmap) of planned features and bugs we'd like to fix
 
 ## Roadmap
 
-See what's already been done in [the changelog.](#changelog) Please suggest changes.
+See what's already been done in the [changelog](#changelog). Please suggest changes.
 
 + **Features**
     + `bundown sync <url> <file>` downloads and over(writes) the Markdown file from `<url>` into `<file>`.

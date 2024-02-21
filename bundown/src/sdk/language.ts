@@ -1,32 +1,10 @@
-type Context = { input: string; files: Record<string, string> }
-type Language = { name: string; aliases: string[]; run?: (ctx: Context) => void }
-export const languages: Language[] = [
-  {
-    name: 'JavaScript',
-    aliases: ['js', 'javascript', 'jsx', 'cjs', 'mjs'],
-    run(ctx) {
-      ctx.files.script += ctx.input + '\n'
-    },
-  },
-  {
-    name: 'Shell',
-    aliases: ['sh', 'bash', 'zsh', 'shell'],
-    run(ctx) {
-      ctx.files.script +=
-        ctx.input
-          .split('\n')
-          .filter(line => line.trim().length > 0 && !line.trim().startsWith('#'))
-          .map(line => `await $\`${line}\`\n`)
-          .join('\n') + '\n'
-    },
-  },
-  {
-    name: 'TypeScript',
-    aliases: ['ts', 'tsx', 'typescript', 'mts', 'cts'],
-    run(ctx) {
-      ctx.files.script += ctx.input + '\n'
-    },
-  },
+export type Language = (typeof languages)[number]['name']
+export type Alias = (typeof languages)[number]['aliases'][number]
+
+const languages = [
+  { name: 'JavaScript', aliases: ['js', 'javascript', 'jsx', 'cjs', 'mjs'] },
+  { name: 'Shell', aliases: ['sh', 'bash', 'zsh', 'shell'] },
+  { name: 'TypeScript', aliases: ['ts', 'tsx', 'typescript', 'mts', 'cts'] },
   { name: 'C', aliases: ['c', 'h', 'cu', 'cuda'] },
   { name: 'C++', aliases: ['c++', 'h++', 'cpp', 'hpp', 'hh', 'hxx', 'cxx', 'cc'] },
   { name: 'C#', aliases: ['cs', 'c#', 'csharp'] },
@@ -59,4 +37,16 @@ export const languages: Language[] = [
   { name: 'WebAssembly', aliases: ['wasm'] },
   { name: 'XML', aliases: ['xml', 'svg'] },
   { name: 'YAML', aliases: ['yml', 'yaml'] },
-]
+] as const satisfies Array<{ name: string; aliases: string[] }>
+
+export const language = {
+  from: {
+    name: (name?: string): Language | undefined => {
+      if (!name) return undefined
+      return languages.find(language => {
+        if (language.name.toLowerCase() === name.toLowerCase()) return true
+        return language.aliases.some(alias => alias.toLowerCase() === name.toLowerCase())
+      })?.name
+    },
+  },
+}
