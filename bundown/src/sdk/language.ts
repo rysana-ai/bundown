@@ -37,7 +37,7 @@ const languages = [
   { name: 'WebAssembly', aliases: ['wasm'] },
   { name: 'XML', aliases: ['xml', 'svg'] },
   { name: 'YAML', aliases: ['yml', 'yaml'] },
-] as const satisfies Array<{ name: string, aliases: string[] }>
+] as const satisfies Array<{ name: string; aliases: string[] }>
 
 export const language = {
   from: {
@@ -47,6 +47,6 @@ export const language = {
         if (language.name.toLowerCase() === name.toLowerCase()) return true
         return language.aliases.some(alias => alias.toLowerCase() === name.toLowerCase())
       })?.name
-    }
-  }
+    },
+  },
 }

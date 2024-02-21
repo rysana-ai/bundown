@@ -1,6 +1,7 @@
 import * as ui from './ui'
-  
-export const usage = (params: { version: string, os: string }) => '\n' +
+
+export const usage = (params: { version: string; os: string }) =>
+  '\n' +
   `${ui.magenta.bold`Bundown`} is a fast Markdown runtime and bundler. ` +
   `${ui.gray(`(${params.version})`)}\n
 ${ui.bold(`Usage: bundown <commmand> ${ui.cyan`[...flags]`} [...args]`)}\n

@@ -28,17 +28,18 @@ export const sdk = {
       from: {
         path: async (path: string) => sdk.hash.sha512.from.text(await sdk.text.from.path(path)),
         object: (obj: unknown) => sdk.hash.sha512.from.text(JSON.stringify(obj, null, 2)),
-        text: (text: string) => new CryptoHasher('sha512').update(text).digest('hex')
-      }
-    }
+        text: (text: string) => new CryptoHasher('sha512').update(text).digest('hex'),
+      },
+    },
   },
   text: {
     from: {
-      path: async (path: string) => await file(path).text()
+      path: async (path: string) => await file(path).text(),
     },
     to: {
-      path: async ({ text, path }: { text: string, path: string }) => await write(path, text, { createPath: true })
-    }
+      path: async ({ text, path }: { text: string; path: string }) =>
+        await write(path, text, { createPath: true }),
+    },
   },
   markdown: {
     from: {
@@ -46,36 +47,48 @@ export const sdk = {
       text: (text: string) => ({
         tree: fromMarkdown(text, {
           extensions: [gfm(), math()],
-          mdastExtensions: [gfmFromMarkdown(), mathFromMarkdown()]
-        })
-      })
+          mdastExtensions: [gfmFromMarkdown(), mathFromMarkdown()],
+        }),
+      }),
     },
     to: {
-      path: async ({ markdown, path }: { markdown: { tree: Nodes }, path: string }) => {
+      path: async ({ markdown, path }: { markdown: { tree: Nodes }; path: string }) => {
         return await sdk.text.to.path({ text: sdk.markdown.to.text({ markdown }), path })
       },
       text: ({ markdown }: { markdown: { tree: Nodes } }) => {
         return toMarkdown(markdown.tree, {
-          extensions: [gfmToMarkdown(), mathToMarkdown()]
+          extensions: [gfmToMarkdown(), mathToMarkdown()],
         })
-      }
+      },
     },
     nodes: {
-      visit: ({ markdown, visitor }: { markdown: { tree: Nodes }, visitor: (node: Node) => void }) => {
+      visit: ({
+        markdown,
+        visitor,
+      }: { markdown: { tree: Nodes }; visitor: (node: Node) => void }) => {
         visit(markdown.tree, visitor)
       },
-      filter: ({ markdown, filter }: { markdown: { tree: Nodes }, filter: (node: Node) => boolean }) => {
+      filter: ({
+        markdown,
+        filter,
+      }: { markdown: { tree: Nodes }; filter: (node: Node) => boolean }) => {
         const result: Node[] = []
-        visit(markdown.tree, (node) => {
+        visit(markdown.tree, node => {
           if (filter(node)) result.push(node)
         })
         return result
-      }
+      },
     },
     blocks: {
-      filter: ({ markdown, filter }: { markdown: { tree: Nodes }, filter?: (node: Node) => boolean }) => {
-        return sdk.markdown.nodes.filter({ markdown, filter: (node) => node.type === 'code' && (filter ? filter(node) : true) }) as Code[]
-      }
+      filter: ({
+        markdown,
+        filter,
+      }: { markdown: { tree: Nodes }; filter?: (node: Node) => boolean }) => {
+        return sdk.markdown.nodes.filter({
+          markdown,
+          filter: node => node.type === 'code' && (filter ? filter(node) : true),
+        }) as Code[]
+      },
     },
     block: {
       args: ({ block }: { block: Code }) => {
@@ -85,13 +98,13 @@ export const sdk = {
           strict: true,
           allowPositionals: false,
           options: {
-            file:     { short: 'f', type: 'string', multiple: false },
-            runtime:  { short: 'r', type: 'string', multiple: false },
-            tag:      { short: 't', type: 'string', multiple: true  },
-            os:       {             type: 'string', multiple: true  }
-          }
+            file: { short: 'f', type: 'string', multiple: false },
+            runtime: { short: 'r', type: 'string', multiple: false },
+            tag: { short: 't', type: 'string', multiple: true },
+            os: { type: 'string', multiple: true },
+          },
         })
-      }
-    }
-  }
+      },
+    },
+  },
 }

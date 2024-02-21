@@ -10,53 +10,69 @@ import { join } from 'node:path'
 import { readdir } from 'node:fs/promises'
 import { type ShellOutput, type BunFile, file, write } from 'bun'
 
-export async function run (params: { source: string, tag?: string[], print?: boolean }) {
+export async function run(params: { source: string; tag?: string[]; print?: boolean }) {
   const source = await resolveSource(params.source)
   const text = await sourceToMarkdown(source)
   const markdown = sdk.markdown.from.text(text)
   await prepare({ path: params.source, markdown }).run({ tag: params.tag, print: params.print })
 }
 
-export async function read ({ path }: { path: string }) {
+export async function read({ path }: { path: string }) {
   const markdown = await sdk.markdown.from.path(path)
   return prepare({ path, markdown })
 }
 
-export function prepare ({ path, markdown }: { path: string, markdown: { tree: Root } }) {
+export function prepare({ path, markdown }: { path: string; markdown: { tree: Root } }) {
   return {
     markdown,
-    run: async (params?: { tag?: string[], print?: boolean }) => {
+    run: async (params?: { tag?: string[]; print?: boolean }) => {
       if (params?.print) console.log()
       for (const node of markdown.tree.children) {
         if (node.type === 'code') {
           const block = enrich({ path, block: node, tag: params?.tag })
           if (params?.print) {
             log(({ console, ui }) => {
-              console.log(ui.box.full(block.data.label)(ui.highlight(block.data.highlighter || 'txt', block.value)))
+              console.log(
+                ui.box.full(block.data.label)(
+                  ui.highlight(block.data.highlighter || 'txt', block.value),
+                ),
+              )
             })
           }
           if (block.data.shouldRun) {
             const path = block.data.safePrefixedPath || block.data.tempPath
             if (!path) throw new Error('Missing runtime path for block')
-            if (path.startsWith('./.bundown/temp/')) await write('./.bundown/temp/.gitignore', '*\n')
+            if (path.startsWith('./.bundown/temp/'))
+              await write('./.bundown/temp/.gitignore', '*\n')
             await sdk.text.to.path({ text: block.value, path })
-            const { exitCode } = await sdk.runtime.call({ runtime: block.data.runtime, path, args: [] }) 
-            if (exitCode !== 0) throw new Error(`Non-zero (${exitCode}) exit code for block at ${block.data.location}`)
+            const { exitCode } = await sdk.runtime.call({
+              runtime: block.data.runtime,
+              path,
+              args: [],
+            })
+            if (exitCode !== 0)
+              throw new Error(
+                `Non-zero (${exitCode}) exit code for block at ${block.data.location}`,
+              )
           }
           if (params?.print) console.log()
         } else {
           if (params?.print) {
             log(({ console, ui }) => {
-              console.log(ui.box.inset(ui.highlight('markdown', sdk.markdown.to.text({ markdown: { tree: node } }))))
+              console.log(
+                ui.box.inset(
+                  ui.highlight('markdown', sdk.markdown.to.text({ markdown: { tree: node } })),
+                ),
+              )
             })
           }
         }
       }
-    }
+    },
   }
 }
 
-export function enrich (params: { path: string, block: Code, tag?: string[] }) {
+export function enrich(params: { path: string; block: Code; tag?: string[] }) {
   const block = {
     ...params.block,
     data: {
@@ -74,10 +90,10 @@ export function enrich (params: { path: string, block: Code, tag?: string[] }) {
       // Resolve block args.
       args: sdk.markdown.block.args({ block: params.block }),
       os: [] as OperatingSystem[],
-      errors: [] as Array<{ message: string, fatal: boolean }>,
+      errors: [] as Array<{ message: string; fatal: boolean }>,
       shouldRun: undefined as boolean | undefined,
-      run: undefined as (() => Promise<ShellOutput>) | undefined
-    }
+      run: undefined as (() => Promise<ShellOutput>) | undefined,
+    },
   }
   // Add positional information, like "README.md:11" that points to the
   // line number location of the code block in the markdown file.
@@ -138,13 +154,13 @@ export function enrich (params: { path: string, block: Code, tag?: string[] }) {
   // current tags matches any one of the specified tag flags.
   const hasApplicableTags =
     (!params.tag?.length && !block.data.args?.values.tag?.length) ||
-    params.tag?.some(tag => block.data.args?.values.tag?.includes(tag))  
+    params.tag?.some(tag => block.data.args?.values.tag?.includes(tag))
   // If block is a supported runnable language.
   const hasRunnableLangauge =
     block.data.language === 'JavaScript' ||
     block.data.language === 'TypeScript' ||
-    block.data.language === 'Shell'      ||
-    block.data.language === 'Python'     ||
+    block.data.language === 'Shell' ||
+    block.data.language === 'Python' ||
     block.data.language === 'Go'
   // If block has fatal errors.
   const hasFatalErrors = block.data.errors.some(e => e.fatal)
@@ -158,7 +174,7 @@ export function enrich (params: { path: string, block: Code, tag?: string[] }) {
   return block
 }
 
-export async function sync (params: { source: string, destination: string, print?: boolean }) {
+export async function sync(params: { source: string; destination: string; print?: boolean }) {
   const source = await resolveSource(params.source)
   if (source.type === 'directory') {
     throw new Error('Bundown sync requires a file as the source.')
@@ -176,7 +192,10 @@ export async function sync (params: { source: string, destination: string, print
       if (file) {
         if (!files[file]) {
           const language = sdk.language.from.name(node.lang || '')
-          files[file] = { lang: ((language && node.lang) ? node.lang : undefined) || 'txt' || '', content: '' }
+          files[file] = {
+            lang: (language && node.lang ? node.lang : undefined) || 'txt' || '',
+            content: '',
+          }
         }
         files[file].content += node.value + '\n'
       }
