@@ -1,4 +1,4 @@
-# <img alt="Bundown" src='bundown/bundown.svg'>
+# <img alt="Bundown" src='packages/docs/bundown.svg'>
 
 [![bundown license](https://img.shields.io/npm/l/bundown.svg?colorB=567&label)](https://github.com/rysana-ai/bundown/blob/main/license) [![bundown package version](https://img.shields.io/npm/v/bundown.svg?colorB=284&label)](https://www.npmjs.com/package/bundown) [![bundown source code size](https://img.shields.io/github/languages/code-size/rysana-ai/bundown?colorB=44e&label)](https://github.com/rysana-ai/bundown) [![bundown speed](https://img.shields.io/static/v1?label&message=blazingly%20fast&color=b22)](https://twitter.com/jrysana/status/1754329326600741266)
 
@@ -23,7 +23,7 @@ Bundown runs TS, JS, and Shell code. It pretty-prints and syncs code in almost a
 + [Roadmap](#roadmap)
 + [Scripts](#scripts)
     + [Format](#format)
-+ [Source](bundown/bundown.ts)
++ [Source](packages/core/bundown.ts)
 + [MIT License](license)
 
 
@@ -169,15 +169,18 @@ See what's already been done in [the changelog.](#changelog) Please suggest chan
 
 ## Scripts
 
-If you have Bundown installed, you can run any of the following scripts with `bundown -t <script>`
+If you have Bundown installed, you can run any of the following scripts with `bundown . -t <script>`
 
 
-### Format
+### Clean
 
-We use `biome` to format our code.
+Use this script to unfold config files, install dependencies, and lint + format with Biome for TS/JS/JSON and Sherif for monorepo setup. Please run this script before you push any commits to ensure that our formatting and guidelines are followed.
 
-To format all files in the project, make sure you have `biome` installed and run:
-
-```sh -t format
+```sh -t clean
+bun x del-cli **/node_modules
+bundown sync packages/config.md .
+bun install
 bun x biome format --write .
+bun x biome check . --apply-unsafe
+bun x sherif
 ```

@@ -5,3 +5,5 @@ bun.lockb
 *.pem
 .env
 *.local*
+biome.json
+package.json
