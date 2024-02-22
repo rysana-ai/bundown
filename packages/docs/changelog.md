@@ -1,6 +1,6 @@
 # Changelog
 
-See what's planned in [the roadmap.](./roadmap)
+See what's planned in [the roadmap.](./roadmap.md)
 
 ### `^0.2.0`
 + **Features**

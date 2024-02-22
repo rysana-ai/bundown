@@ -1,8 +1,8 @@
 # Roadmap
 
-See what's already been done in [the changelog.](./changelog) Please suggest changes.
+See what's already been done in [the changelog.](./changelog.md) Please suggest changes.
 
-This roadmap is for changes to Bundown we've already planned - for ideas we're considering, see the [ideas](./ideas) file.
+This roadmap is for changes to Bundown we've already planned - for ideas we're considering, see the [ideas](./ideas.md) file.
 
 + **Features**
     + `bundown ai` uses the core runtime, pretty-printing, and safe execution to deliver a great private, local, open-source alternative interface to LLM chat/search/code apps.

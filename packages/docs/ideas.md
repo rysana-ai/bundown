@@ -1,8 +1,8 @@
 # Ideas
 
-See what's planned in [the roadmap.](./roadmap)
+See what's planned in [the roadmap.](./roadmap.md)
 
-See what's already been done in [the changelog.](./changelog)
+See what's already been done in [the changelog.](./changelog.md)
 
 + **Features**
     + `bundown` that runs in the Browser? (Through WASM?)

@@ -18,12 +18,13 @@ Bundown runs TS, JS, and Shell code. It pretty-prints and syncs code in almost a
 ## Links
 
 + [Usage](#usage)
-+ [Changelog](packages/docs/changelog)
 + [Contributing](#contributing)
-+ [Roadmap](packages/docs/roadmap)
-+ [Ideas](packages/docs/ideas)
 + [Scripts](#scripts)
     + [Format](#format)
++ [Docs](packages/docs)
+    + [Changelog](packages/docs/changelog.md)
+    + [Roadmap](packages/docs/roadmap.md)
+    + [Ideas](packages/docs/ideas.md)
 + [Examples](packages/examples)
 + [Source](packages/core/bundown.ts)
 + [MIT License](license)
@@ -45,9 +46,9 @@ Bundown runs TS, JS, and Shell code. It pretty-prints and syncs code in almost a
 
 If you have any bugs, feature requests, etc. please open a [discussion](https://github.com/rysana-ai/bundown/discussions), [issue](https://github.com/rysana-ai/bundown/issues) or [pull request](https://github.com/rysana-ai/bundown/pulls) as appropriate.
 
-Before you open a PR, use [this script](#format) to format the code with `biome`. We use an opinionated style guide, aimed at maximizing the intuitive readability of code and minimizing noisy syntax - follow it.
+Before you open a PR, use [this script](#clean) to format the code with `biome`. We use an opinionated style guide, aimed at maximizing the intuitive readability of code and minimizing noisy syntax - follow it.
 
-We also have a [roadmap](#roadmap) of planned features and bugs we'd like to fix if you'd like to pick one up:
+We also have a [roadmap](packages/docs/roadmap.md) of planned features and bugs we'd like to fix if you'd like to pick one up:
 
 
 
