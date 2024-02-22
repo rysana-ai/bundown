@@ -20,6 +20,8 @@ See what's planned in [the roadmap.](./roadmap.md)
         + works as a code block flag
         + works as a CLI flag
 + **Improvements**
+    + [ ] `bundown` runtime always syncs files with `-f` flags before running.
+    + [ ] `bundown` runtime writes and destroys temp files at `{block_hash}.{ext}`.
     + [ ] `github://` and `gist://` URIs are now supported in source resolver.
     + [ ] `--os` flag now supports `platform-arch` specifiers, e.g. `linux-x64`.
     + `bundown sync packages/config.md .` is used to unfold much of the Bundown codebase from a single file.

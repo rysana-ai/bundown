@@ -4,6 +4,7 @@ bun.lockb
 .DS_Store
 *.pem
 .env
+*.env.*
 *.local*
 biome.json
 package.json

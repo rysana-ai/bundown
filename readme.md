@@ -10,7 +10,7 @@ You can install `bundown` (`bd`) globally using [Bun](https://bun.sh):
 bun i -g bundown
 ```
 
-Bundown runs TS, JS, and Shell code. It pretty-prints and syncs code in almost any language.
+Bundown runs TS, JS, Shell, Python, and Go code. It pretty-prints and syncs code in almost any language.
 
 
 

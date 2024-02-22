@@ -74,6 +74,58 @@ Soon, we'll replace these JSON blocks with TS blocks that transpile to JSON auto
 ```
 
 
+### Examples
+
+```json -f packages/examples/package.json
+{
+  "name": "@bundown/examples",
+  "private": true
+}
+```
+
+
+
+
+## Bun
+
+```toml -f bunfig.toml
+[install.lockfile]
+print = "yarn"
+```
+
+
+
+
+## TypeScript
+
+```json -f tsconfig.json
+{
+  "compilerOptions": {
+    "lib": ["esnext"],
+    "target": "esnext",
+    "module": "esnext",
+    "moduleDetection": "force",
+    "jsx": "preserve",
+    "paths": { "~/*": ["./*"] },
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "verbatimModuleSyntax": true,
+    "noUncheckedIndexedAccess": true,
+    "allowImportingTsExtensions": true,
+    "noFallthroughCasesInSwitch": true,
+    "useUnknownInCatchVariables": true,
+    "forceConsistentCasingInFileNames": true,
+    "noPropertyAccessFromIndexSignature": true
+  }
+}
+````
+
+
 
 
 ## Biome
