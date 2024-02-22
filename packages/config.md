@@ -123,7 +123,7 @@ print = "yarn"
     "noPropertyAccessFromIndexSignature": true
   }
 }
-````
+```
 
 
 
