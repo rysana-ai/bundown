@@ -8,3 +8,5 @@ bun.lockb
 *.local*
 biome.json
 package.json
+bunfig.toml
+tsconfig.json
