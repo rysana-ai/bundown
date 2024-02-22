@@ -5,7 +5,7 @@ import { join } from 'node:path'
 import { type BunFile, CryptoHasher, file, semver, write } from 'bun'
 import { languages } from './languages'
 import { Markdown } from './markdown'
-import { dependencies, version } from './package.json'
+import { version } from './package.json'
 import * as ui from './ui'
 const os = platform()
 const usage =
@@ -79,10 +79,10 @@ function parseArgs(args: string[]) {
   return output
 }
 const { flags, command, args } = parseArgs(process.argv.slice(2))
-if (!semver.satisfies(Bun.version, dependencies.bun)) {
+if (!semver.satisfies(Bun.version, '^1.0.27')) {
   console.log(usage)
   console.error(
-    `\nBundown requires Bun version ${dependencies.bun}, but found ${Bun.version}.\n` +
+    `\nBundown requires Bun version ^1.0.27, but found ${Bun.version}.\n` +
       `Please run ${ui.bold.underline`bun upgrade`} to update to the latest version of Bun.\n`,
   )
   process.exit(1)

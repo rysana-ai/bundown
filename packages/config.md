@@ -40,7 +40,6 @@ Soon, we'll replace these JSON blocks with TS blocks that transpile to JSON auto
   "repository": { "type": "git", "url": "https://github.com/rysana-ai/bundown.git" },
   "bin": { "bundown": "./bundown.ts", "bd": "./bundown.ts" },
   "dependencies": {
-    "bun": "^1.0.24",
     "chalk": "^5.3.0",
     "emphasize": "^7.0.0",
     "mdast-util-from-markdown": "^2.0.0",
@@ -54,9 +53,7 @@ Soon, we'll replace these JSON blocks with TS blocks that transpile to JSON auto
   },
   "devDependencies": {
     "@biomejs/biome": "^1.5.3",
-    "@types/bun": "^1.0.5",
-    "@types/node": "^20.11.16",
-    "typescript": "^5.3.3"
+    "@types/bun": "^1.0.5"
   },
   "os": ["darwin", "linux"],
   "cpu": ["arm64", "x64"]
