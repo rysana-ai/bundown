@@ -1,6 +1,6 @@
+import { stringWidth } from 'bun'
 import chalk from 'chalk'
 import { common, createEmphasize } from 'emphasize'
-import stringWidth from 'string-width'
 import wrapAnsi from 'wrap-ansi'
 const emphasize = createEmphasize(common)
 export const reset = chalk.reset

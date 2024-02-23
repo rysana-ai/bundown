@@ -18,10 +18,9 @@ Soon, we'll replace these JSON blocks with TS blocks that transpile to JSON auto
   "private": true,
   "workspaces": ["packages/*"],
   "devDependencies": {
-    "@biomejs/biome": "^1.5.3",
-    "bun": "^1.0.24"
+    "@biomejs/biome": "^1.5.3"
   },
-  "packageManager": "bun@1.0.24"
+  "packageManager": "bun@1.0.29"
 }
 ```
 
@@ -31,7 +30,7 @@ Soon, we'll replace these JSON blocks with TS blocks that transpile to JSON auto
 ```json -f packages/core/package.json
 {
   "name": "bundown",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Bundown is a fast all-in-one Markdown runtime.",
   "keywords": ["bundown", "bun", "markdown", "runtime", "typescript", "javascript", "shell"],
   "license": "MIT",
@@ -53,7 +52,7 @@ Soon, we'll replace these JSON blocks with TS blocks that transpile to JSON auto
   },
   "devDependencies": {
     "@biomejs/biome": "^1.5.3",
-    "@types/bun": "^1.0.5"
+    "@types/bun": "^1.0.7"
   },
   "os": ["darwin", "linux"],
   "cpu": ["arm64", "x64"]

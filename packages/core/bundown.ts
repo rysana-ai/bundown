@@ -79,10 +79,10 @@ function parseArgs(args: string[]) {
   return output
 }
 const { flags, command, args } = parseArgs(process.argv.slice(2))
-if (!semver.satisfies(Bun.version, '^1.0.27')) {
+if (!semver.satisfies(Bun.version, '^1.0.29')) {
   console.log(usage)
   console.error(
-    `\nBundown requires Bun version ^1.0.27, but found ${Bun.version}.\n` +
+    `\nBundown requires Bun version ^1.0.29, but found ${Bun.version}.\n` +
       `Please run ${ui.bold.underline`bun upgrade`} to update to the latest version of Bun.\n`,
   )
   process.exit(1)
